@@ -21,6 +21,23 @@ https://www.ired.team/offensive-security-experiments/active-directory-kerberos-a
 don't turn off your brain, it's a killchain, not a chillchain. be flexible
 
 
+# tools
+
+feeling cute, might make into a workspace setup script later
+```
+https://github.com/GhostPack/Seatbelt
+https://github.com/r3motecontrol/Ghostpack-CompiledBinaries
+https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1
+https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors
+https://github.com/Tib3rius/AutoRecon
+    sudo apt install seclists curl dnsrecon enum4linux feroxbuster gobuster impacket-scripts nbtscan nikto nmap onesixtyone oscanner redis-tools smbclient smbmap snmp sslscan sipvicious tnscmd10g whatweb wkhtmltopdf
+    sudo apt install python3-venv
+    python3 -m pip install --user pipx
+    python3 -m pipx ensurepath
+    pipx install git+https://github.com/Tib3rius/AutoRecon.git
+```
+
+
 # basic enum
 
 // runas
