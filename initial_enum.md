@@ -98,3 +98,19 @@ nmap -sV --script irc-botnet-channels,irc-info,irc-unrealircd-backdoor -p 194,66
 nmap -sV -Pn -vv 10.0.0.1 -p 3306 --script mysql-audit,mysql-databases,mysql-dump-hashes,mysql-empty-password,mysql-enum,mysql-info,mysql-query,mysql-users,mysql-variables,mysql-vuln-cve2012-2122
 ```
 
+## // HTTP, HTTPS
+```
+whatweb <url>
+nikto -h <url>
+nmap --script http-enum <url>
+
+
+gobuster dir -w /usr/share/seclists/Discovery/Web_Content/common.txt -t 80 -u http://<url>
+gobuster dir -w /usr/share/seclists/Discovery/Web_Content/common.txt -t 100 -x txt,php,csv,md,json,js,html,py,sh -u http://<url>
+gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x txt,php,csv,md,json,js,html,py,sh -t 100 -u http://<url>
+gobuster dir -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories-lowercase.txt -t 100 -x txt,php,csv,md,json,js,html,py,sh -u http://<url>
+gobuster -s 200,204,301,302,307,403 -w /usr/share/seclists/Discovery/Web_Content/big.txt -t 100 -x txt,php,csv,md,json,js,html,py,sh -u http://<url>
+
+wfuzz -c -w /usr/share/wfuzz/wordlist/general/common.txt --hc 404 --hw 12 http://192.168.0.119/index.php?FUZZ=id
+
+```
