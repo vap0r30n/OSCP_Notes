@@ -100,6 +100,23 @@ nmap -sV -Pn -vv 10.0.0.1 -p 3306 --script mysql-audit,mysql-databases,mysql-dum
 
 ## // HTTP, HTTPS
 ```
+(https://parzival.sh/blog/my-oscp-notes-and-resources)
+This checklist serves as a very basic web server checklist:
+
+    Read all pages through fully to identify any potential usernames and/or emails.
+    Check for robots.txt to enumerate any additional information about the site.
+    Check the SSL certificate for any usernames.
+    Enumerate directories with either FeroxBuster or GoBuster.
+    Run FeroxBuster with any identiifed extensions (e.g., -x php,html,sh)
+    Enumerate available applications to identify version numbers such as the CMS, server installation pages, and use Wappalyzer.
+    View source code to identify any usernames/passwords, hidden developer comments, and hidden pages.
+    Test all identified parameters for LFI, RFI, SQLi, SSRF, etc.
+    Test default credentials against all of the login pages: admin:admin or credentials identified via Google for the application.
+    Attempt to bypass login with basic SQLi.
+    Register an account on the site if possibe to test any additionally identified parameters.
+    Scan for Heartbleed: sslscan $ip
+
+
 whatweb <url>
 nikto -h <url>
 nmap --script http-enum <url>
@@ -114,3 +131,24 @@ gobuster -s 200,204,301,302,307,403 -w /usr/share/seclists/Discovery/Web_Content
 wfuzz -c -w /usr/share/wfuzz/wordlist/general/common.txt --hc 404 --hw 12 http://192.168.0.119/index.php?FUZZ=id
 
 ```
+
+## // Windows Checklist
+```
+This checklist serves as a very basic Windows checklist:
+
+- Run SMBMap against any identified SMB services: smbmap -H $ip
+- Access SMB shares manually with smbclient: `smbclient \\$ip\$share
+- Revisit all services with any identified credentials such as SSH, SMB, FTP, HTTP. 
+- Get the naming context of LDAP: ldapsearch -h $ip -x -s base namingcontexts
+- After identifying the naming context, enumerate more: `ldapsearch -h $ip -x -b "DC=htb,DC=local"
+- Enumerate RPC with rpcclient: `rpcclient -U '' $ip
+- Some interesting flags for rpcclient are: `enumdomusers`, `queryuser parzival`, `querydomgroups`, and `querydispinfo`
+- Enumerate LDAP without credentials: 
+    ldapsearch -x -h $ip -D '<DOMAIN>\<username>' -w '<password>' -b "DC=<1_SUBDOMAIN>,DC=<TDL>"
+
+    If WebDAV is identified then we can upload a web shell using Cadaver
+    If we’re authenticated to WebDAV then davtest is amazing at testing upload capabilities:
+
+davtest -auth $user:[PASSWORD] -sendbd auto -url http://$ip
+```
+
