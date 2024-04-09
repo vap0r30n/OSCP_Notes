@@ -37,6 +37,20 @@ https://github.com/Tib3rius/AutoRecon
     pipx install git+https://github.com/Tib3rius/AutoRecon.git
 ```
 
+# active directory checklist
+```
+1. Gain access to a domain user account.
+2. Enumerate the domain with the commands listed above.
+3. Enumerate all computers on the domain. Don't just enumerate one computer.. Enumerate them all.
+4. Enumerate all users logged onto computers that we have local administrator access to.
+5. Kerberoast with any user account acquired (GetUserSPNs, Invoke-Kerberoast, etc)
+6. Attempt credential-based attacks against all discovered user accounts.
+7. Pass the Hash to pivot (Also try to Pass the Ticket if applicable).
+8. Run Mimikatz on all systems (Can also run LSASSY with CrackMapExec).
+9. Enumerate password hashes and tickets: `sekurlsa::logonpasswords` and `sekurlsa::tickets`.
+
+https://parzival.sh/blog/my-oscp-notes-and-resources
+```
 
 # basic enum
 
